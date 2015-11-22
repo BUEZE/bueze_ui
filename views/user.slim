@@ -5,13 +5,13 @@
     input type='submit' id='home-form-submit' class='submit' value='submit'
 
   -if @userinfo
-      h3 = @userinfo.user_id
+      h3 = @userinfo['user_id']
       table class='table'
         tbody
           tr
             th #
             th Title
-        -@userinfo.collections.each_with_index do |book, index|
+        -@userinfo['collections'].each_with_index do |book, index|
           tr
             td
               = index + 1

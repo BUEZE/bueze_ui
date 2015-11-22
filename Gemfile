@@ -13,6 +13,8 @@ gem 'hirb'
 gem 'slim'
 gem 'sinatra-flash'
 
+gem 'virtus'
+
 group :test do
   gem 'minitest'
   gem 'rack'

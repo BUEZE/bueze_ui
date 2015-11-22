@@ -6,7 +6,7 @@ require 'slim'
 
 # Simple web service for taaze api
 class AppController < Sinatra::Base
-  helpers BuezeHelpers, ScrapeHelpers
+  helpers ApplicationHelpers 
   register Sinatra::Flash
   use Rack::MethodOverride
 
@@ -15,15 +15,6 @@ class AppController < Sinatra::Base
 
   configure :production, :development do
     enable :logging
-  end
-
-  helpers do
-    def current_page?(path = ' ')
-      path_info = request.path_info
-      path_info += ' ' if path_info == '/'
-      request_path = path_info.split '/'
-      request_path[1] == path
-    end
   end
 
   app_get_root = lambda do
@@ -43,7 +34,15 @@ class AppController < Sinatra::Base
 
   app_get_userinfo = lambda do
     @user_id = params[:user_id]
-    @userinfo = get_userinfo(@user_id)
+   
+    logger.info "http://bueze.herokuapp.com/api/v1/user/#{@user_id}" 
+    begin
+      @userinfo = HTTParty.get bueze_api_url("user/#{@user_id}")
+    logger.info @userinfo + 'QQ!'
+    rescue
+      flash[:notice] = 'Could not access Bueze - please try again later'
+      logger.info "GG"
+    end
 
     if @user_id && @userinfo.nil?
       flash[:notice] = 'User not found' if @userinfo.nil?
