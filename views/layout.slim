@@ -1,0 +1,15 @@
+doctype 5
+html
+  head
+    title Bueze
+    link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.min.css'
+    link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.min.css'
+    link rel='stylesheet' type='text/css' href='/style.css'
+  body
+    header
+      == slim :nav
+    section
+      == styled_flash
+      == yield
+    .footer
+      == slim :footer
