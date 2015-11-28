@@ -1,6 +1,5 @@
 # BUEZE Webservice
-A simple version of web service that scrapes TAAZE data using the
-[taaze](https://github.com/BUEZE/taaze) gem with continuous development using CodeShip and Heroku.
+Front end of web service Bueze.
 
 Here's the [link](http://buezeui.herokuapp.com/) to our project.
 
