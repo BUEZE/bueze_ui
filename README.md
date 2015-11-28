@@ -1,6 +1,6 @@
 # BUEZE Webservice
+[ ![Codeship Status for BUEZE/bueze_ui](https://codeship.com/projects/d034abc0-77da-0133-81e5-0677e176d0b1/status?branch=master)](https://codeship.com/projects/118494)
 Front end of web service Bueze.
-
 Here's the [link](http://buezeui.herokuapp.com/) to our project.
 
 ### Example:
