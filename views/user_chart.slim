@@ -1,3 +1,7 @@
+/ # For chart:
+script src='//code.highcharts.com/highcharts.js' type='text/javascript'
+script src='/chartkick.js', type='text/javascript'
+
 .container
 
   form action='/user' method='get' id='user-form'
@@ -8,18 +12,19 @@
       h3 = 'Collections of user ' + @userinfo['user_id']
       div
         div id='list_title'
-          a href= "../user/#{@userinfo['user_id']}" target='a' = 'List'
+          a href= "../user/#{@userinfo['user_id']}" target='' = 'List'
         div id='chart_title' = 'Chart'
-      table class='table'
-        tbody
-          tr
-            th #
-            th Title
-        -@userinfo['collections'].each_with_index do |book, index|
-          tr
-            td
-              = index + 1
-            td
-              a href= book['book_url'] target='a' = book['title']
-            td
-              = book['crt_time']
+      div id='chart' height='300px'
+      / table class='table'
+      /   tbody
+      /     tr
+      /       th #
+      /       th Title
+      /   -@userinfo['collections'].each_with_index do |book, index|
+      /     tr
+      /       td
+      /         = index + 1
+      /       td
+      /         a href= book['book_url'] target='a' = book['title']
+      /       td
+      /         = book['crt_time']
