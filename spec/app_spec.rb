@@ -1,7 +1,10 @@
 require_relative 'spec_helper'
+require 'page-object'
 require 'json'
 
 describe 'Bueze UI Testing' do
+  include PageObject::PageFactory
+
   before do
     unless @browser
       @headless = Headless.new
@@ -18,10 +21,11 @@ describe 'Bueze UI Testing' do
 
   describe 'Visiting the find user page' do
     it 'can go to the find user page' do
-      @browser.link(text: 'Find User').click
-
-      @browser.url.must_match %r{http.*/user}
-      @browser.text_field(name: 'user_id').exists?.must_equal true
+      visit HomePage do |page|
+        page.click_find_user
+        @browser.url.must_match %r{http.*/user}
+        @browser.text_field(name: 'user_id').exists?.must_equal true
+      end
     end
 
     it 'can search the user with user id' do
@@ -29,7 +33,7 @@ describe 'Bueze UI Testing' do
 
       @browser.text_field(name: 'user_id').set('12522728')
       @browser.button(id: 'home-form-submit').click
-      
+
       @browser.url.must_match %r{http.*/user/12522728}
       @browser.h3.text.must_equal '12522728'
       @browser.table(class: 'table').exist?.must_equal true
