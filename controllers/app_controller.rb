@@ -3,6 +3,7 @@ require 'sinatra/flash'
 require 'httparty'
 require 'hirb'
 require 'slim'
+require 'chartkick'
 
 # Simple web service for taaze api
 class AppController < Sinatra::Base
@@ -56,8 +57,17 @@ class AppController < Sinatra::Base
     @user_id = params[:user_id]
     logger.info "http://bueze.herokuapp.com/api/v1/user/#{@user_id}"
     begin
+      @string = ''
+      @years = Hash['2010' => 0, '2011' => 0, '2012' => 0, '2013' => 0, '2014' => 0, '2015' => 0]
       @userinfo = HTTParty.get bueze_api_url("user/#{@user_id}")
-    # logger.info @userinfo
+      @userinfo['collections'].each do |book|
+        year = book['crt_time'].split('/')[0].to_i
+        init_year = 2010
+        while init_year <= 2015
+          @years[init_year.to_s] += 1 if year <= init_year
+          init_year += 1
+        end
+      end
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
       logger.info 'Could not access the site'

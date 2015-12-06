@@ -12,6 +12,7 @@ gem 'httparty'
 gem 'hirb'
 gem 'slim'
 gem 'sinatra-flash'
+gem 'chartkick'
 
 gem 'virtus'
 gem 'page-object'
