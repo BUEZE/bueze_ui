@@ -5,7 +5,11 @@
     input type='submit' id='home-form-submit' class='submit' value='submit'
 
   -if @userinfo
-      h3 = @userinfo['user_id']
+      h3 = 'Collections of user ' + @userinfo['user_id']
+      div
+        div id='list_title'
+          a href= "../user/#{@userinfo['user_id']}" target='a' = 'List'
+        div id='chart_title' = 'Chart'
       table class='table'
         tbody
           tr
@@ -16,4 +20,6 @@
             td
               = index + 1
             td
-              a href== book['book_url'] target='a' = book['title']
+              a href= book['book_url'] target='a' = book['title']
+            td
+              = book['crt_time']

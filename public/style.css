@@ -7,3 +7,12 @@ body {
   text-align: center;
   color: white;
 }
+
+#list_title {
+	display: inline;
+}
+
+#chart_title {
+	display: inline;
+	padding-left: 10px;
+}

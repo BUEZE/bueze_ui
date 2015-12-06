@@ -10,7 +10,7 @@
         - else
           li
             a href='/' id='home'  Home
-        - if current_page?('user')
+        - if current_page?('user')||('user_chart')
           li class='current_page_item active'
             a href='/user' id='user'  Find User
         - else

@@ -6,7 +6,7 @@ require 'slim'
 
 # Simple web service for taaze api
 class AppController < Sinatra::Base
-  helpers ApplicationHelpers 
+  helpers ApplicationHelpers
   register Sinatra::Flash
   use Rack::MethodOverride
 
@@ -29,19 +29,18 @@ class AppController < Sinatra::Base
       return nil
     end
 
-    slim :user
+    slim :user_list
   end
 
   app_get_userinfo = lambda do
     @user_id = params[:user_id]
-   
-    logger.info "http://bueze.herokuapp.com/api/v1/user/#{@user_id}" 
+    logger.info "http://bueze.herokuapp.com/api/v1/user/#{@user_id}"
     begin
       @userinfo = HTTParty.get bueze_api_url("user/#{@user_id}")
-    logger.info @userinfo + 'QQ!'
+    # logger.info @userinfo
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
-      logger.info "GG"
+      logger.info 'Could not access the site'
     end
 
     if @user_id && @userinfo.nil?
@@ -50,11 +49,32 @@ class AppController < Sinatra::Base
       return nil
     end
 
-    slim :user
+    slim :user_list
+  end
+
+  app_get_userchart = lambda do
+    @user_id = params[:user_id]
+    logger.info "http://bueze.herokuapp.com/api/v1/user/#{@user_id}"
+    begin
+      @userinfo = HTTParty.get bueze_api_url("user/#{@user_id}")
+    # logger.info @userinfo
+    rescue
+      flash[:notice] = 'Could not access Bueze - please try again later'
+      logger.info 'Could not access the site'
+    end
+
+    if @user_id && @userinfo.nil?
+      flash[:notice] = 'User not found' if @userinfo.nil?
+      redirect '/user_chart'
+      return nil
+    end
+
+    slim :user_chart
   end
 
   # Web App Views Routes
   get '/', &app_get_root
   get '/user', &app_get_user
   get '/user/:user_id', &app_get_userinfo
+  get '/user_chart/:user_id', &app_get_userchart
 end
