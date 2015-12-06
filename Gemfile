@@ -14,6 +14,7 @@ gem 'slim'
 gem 'sinatra-flash'
 
 gem 'virtus'
+gem 'page-object'
 
 group :test do
   gem 'minitest'
