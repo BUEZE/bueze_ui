@@ -29,16 +29,12 @@ describe 'Bueze UI Testing' do
     end
 
     it 'can search the user with user id' do
-      @browser.link(text: 'Find User').click
-
-      @browser.text_field(name: 'user_id').set('12522728')
-      @browser.button(id: 'home-form-submit').click
-
-      @browser.url.must_match %r{http.*/user/12522728}
-      @browser.h3.text.must_equal '12522728'
-      @browser.table(class: 'table').exist?.must_equal true
-      @browser.table(class: 'table').rows[0][0].text.must_equal '#'
-      @browser.table(class: 'table').rows[0][1].text.must_equal 'Title'
+      visit UserPage do |page|
+        page.find_user('12522728')
+        @browser.url.must_match %r{http.*/user/12522728}
+        page.shown_user_id.must_equal '12522728'
+        page.num_of_books_shown.must_equal 41
+      end
     end
   end
 end
