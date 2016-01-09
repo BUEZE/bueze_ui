@@ -23,11 +23,11 @@ GEM
     bond (0.5.1)
     builder (3.2.2)
     chartkick (1.4.1)
-    childprocess (0.5.8)
+    childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    crack (0.4.2)
+    crack (0.4.3)
       safe_yaml (~> 1.0.0)
     daemons (1.2.3)
     data_magic (0.22)
@@ -52,7 +52,7 @@ GEM
     minitest (5.8.3)
     multi_json (1.11.2)
     multi_xml (0.5.5)
-    page-object (1.1.0)
+    page-object (1.1.1)
       page_navigation (>= 0.9)
       selenium-webdriver (>= 2.44.0)
       watir-webdriver (>= 0.6.11)
@@ -99,7 +99,7 @@ GEM
       eventmachine (~> 1.0, >= 1.0.4)
       rack (~> 1.0)
     thread_safe (0.3.5)
-    tilt (2.0.1)
+    tilt (2.0.2)
     tux (0.3.0)
       ripl (>= 0.3.5)
       ripl-multi_line (>= 0.2.4)
@@ -107,7 +107,7 @@ GEM
       sinatra (>= 1.2.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    vcr (3.0.0)
+    vcr (3.0.1)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -115,12 +115,12 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     watir-webdriver (0.9.1)
       selenium-webdriver (>= 2.46.2)
-    webmock (1.22.3)
-      addressable (>= 2.3.6)
+    webmock (1.22.5)
+      addressable (< 2.4.0)
       crack (>= 0.3.2)
       hashdiff
     websocket (1.2.2)
-    yml_reader (0.6)
+    yml_reader (0.7)
 
 PLATFORMS
   ruby
@@ -152,4 +152,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

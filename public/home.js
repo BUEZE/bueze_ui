@@ -30,9 +30,9 @@ window.onload = function () {
         $('#book_title').html(title);
         new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 0, max: 10}}});
         addTagCloud(["動物", "考古", "歷史"]);
+        // replaceRank();
       });
   });
-
 };
 
 var addTagCloud = function(tags) {
@@ -64,4 +64,12 @@ function draw(words) {
         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
       })
       .text(function(d) { return d.text; });
+}
+
+function replaceRank() {
+  d3.select('svg').selectAll('g')[0].forEach(function(item){
+    if (d3.select(item).attr('class') == 'highcharts-axis-labels highcharts-yaxis-labels') {
+      $(item.childNodes[item.childNodes.length - 1]).text('x');
+    };
+  });
 }
