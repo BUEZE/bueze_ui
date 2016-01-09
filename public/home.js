@@ -8,9 +8,9 @@ window.onload = function () {
     }
   });
 
-  $.get( "/ranking_chart")
+  $.get( "/ranking_chart", {name: $( '.success' ).find('td#bookname').html()})
     .done(function( data ) {
-      new Chartkick.LineChart("ranking_vis", JSON.parse(data), {library: {yAxis: {reversed: true, min: 0, max: 10}}});
+      new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 0, max: 10}}});
       addTagCloud(["埋冤人物誌", "2015 TOP 不只100", "台日交流歷史"]);
     });
 
@@ -18,22 +18,23 @@ window.onload = function () {
     if($( this ).hasClass('success'))
       return;
 
+    var title = $( this ).find('td#bookname').html();
     $('svg').remove();
     $('.books').each(function() {
       $( this ).removeClass('success');
     });
     $( this ).addClass('success');
 
-    $.get( "/ranking_chart")
+    $.get( "/ranking_chart", {name: title})
       .done(function( data ) {
-        new Chartkick.LineChart("ranking_vis", JSON.parse(data), {library: {yAxis: {reversed: true, min: 0, max: 10}}});
+        $('#book_title').html(title);
+        new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 0, max: 10}}});
         addTagCloud(["動物", "考古", "歷史"]);
       });
   });
 
-}
+};
 
-// [".NET", "Silverlight", "jQuery", "CSS3", "HTML5", "JavaScript", "SQL","C#"]
 var addTagCloud = function(tags) {
   d3.layout.cloud().size([300, 300])
       .words(tags.map(function(d) {
@@ -44,11 +45,11 @@ var addTagCloud = function(tags) {
       .fontSize(function(d) { return d.size; })
       .on("end", draw)
       .start();
-}
+};
 
 function draw(words) {
   d3.select("#tag_vis").append("svg")
-      .attr("width", $('#tag_vis').width())
+      .attr("width", 300)
       .attr("height", 300)
     .append("g")
       .attr("transform", "translate(150,150)")

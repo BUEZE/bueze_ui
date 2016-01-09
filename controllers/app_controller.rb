@@ -85,7 +85,13 @@ class AppController < Sinatra::Base
 
   app_get_rankingchart = lambda do
     begin
-      @history_ranking = Hash['2016-01-02' => 1, '2016-01-03' => 3, '2016-01-04' => 5, '2016-01-05' => 7, '2016-01-06' => 5, '2016-01-07' => 5, '2016-01-08' => 1]
+      content_type :json, charset: 'utf-8'
+      @name = params[:name]
+      @history_ranking = Hash[]
+      @history_rankings = HTTParty.get URI.encode(bueze_api_url("get_bookhistory/#{@name}"))
+      @history_rankings.each do |ranking|
+        @history_ranking[ranking['date']] = ranking['rank']
+      end
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
       logger.info 'Could not access the site'
