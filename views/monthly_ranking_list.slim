@@ -11,16 +11,20 @@
 
   -if @ranking
     ol class = 'breadcrumb'
-      li
-        a href= "../monthly_ranking_list/#{Date.parse(Date.today.to_s[0..-3] + '01')}&#{Date.today}" = 'Monthly'
+      li class = 'active' = 'Monthly'
       li
         a href= "../weekly_ranking_list/#{Date.today - 6}&#{Date.today}" = 'Weekly'
-      li class = 'active' = 'Daily'
-    h3 = "Today's Top 10"
+      li
+        a href= "../daily_ranking_list/#{Date.today}" = 'Daily'
+    h3 = "Top 10 Books of #{@enddate.next_day.to_s[0..-4]}"
     div id='list_navigator'
       div id='prev_list' 
-        a href= "../daily_ranking_list/#{Date.today.prev_day}" target='' = 'Prev'
-      div id='next_list' = 'Next'
+        a href= "../monthly_ranking_list/#{Date.parse((@startdate -1).to_s[0..-3] + '01')}&#{Date.parse((@startdate -1).to_s[0..-3] + Date.new((@startdate -1).to_s[0..3].to_i, (@startdate -1).to_s[5..6].to_i, -1).day.to_s)}" = 'Prev'
+        -if @enddate.next_day == Date.today
+          div id='next_list' = 'Next'
+        -else
+          div id='next_list'
+            a href= "../monthly_ranking_list/#{Date.parse(Date.today.to_s[0..-3] + '01')}&#{Date.today}" = 'Next'
     div class = 'col-md-6'
       div class = 'panel panel-default'
         table class='table ranking_table'

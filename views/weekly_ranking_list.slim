@@ -13,14 +13,18 @@
     ol class = 'breadcrumb'
       li
         a href= "../monthly_ranking_list/#{Date.parse(Date.today.to_s[0..-3] + '01')}&#{Date.today}" = 'Monthly'
+      li class = 'active' = 'Weekly'
       li
-        a href= "../weekly_ranking_list/#{Date.today - 6}&#{Date.today}" = 'Weekly'
-      li class = 'active' = 'Daily'
-    h3 = "Today's Top 10"
+        a href= "../daily_ranking_list/#{Date.today}" = 'Daily'
+    h3 = "Top 10 Books: #{@startdate.next_day} ~ #{@enddate.next_day}"
     div id='list_navigator'
       div id='prev_list' 
-        a href= "../daily_ranking_list/#{Date.today.prev_day}" target='' = 'Prev'
-      div id='next_list' = 'Next'
+        a href= "../weekly_ranking_list/#{@startdate - 6}&#{@startdate}" target='' = 'Prev'
+        -if @enddate.next_day == Date.today
+          div id='next_list' = 'Next'
+        -else
+          div id='next_list'
+            a href= "../weekly_ranking_list/#{@enddate + 2}&#{@enddate + 8}" target='' = 'Next'
     div class = 'col-md-6'
       div class = 'panel panel-default'
         table class='table ranking_table'
