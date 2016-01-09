@@ -18,6 +18,7 @@ window.onload = function () {
     if($( this ).hasClass('success'))
       return;
 
+    var title = $( this ).find('td#bookname').html();
     $('svg').remove();
     $('.books').each(function() {
       $( this ).removeClass('success');
@@ -26,14 +27,14 @@ window.onload = function () {
 
     $.get( "/ranking_chart")
       .done(function( data ) {
+        $('#book_title').html(title);
         new Chartkick.LineChart("ranking_vis", JSON.parse(data), {library: {yAxis: {reversed: true, min: 0, max: 10}}});
         addTagCloud(["動物", "考古", "歷史"]);
       });
   });
 
-}
+};
 
-// [".NET", "Silverlight", "jQuery", "CSS3", "HTML5", "JavaScript", "SQL","C#"]
 var addTagCloud = function(tags) {
   d3.layout.cloud().size([300, 300])
       .words(tags.map(function(d) {
@@ -44,7 +45,7 @@ var addTagCloud = function(tags) {
       .fontSize(function(d) { return d.size; })
       .on("end", draw)
       .start();
-}
+};
 
 function draw(words) {
   d3.select("#tag_vis").append("svg")

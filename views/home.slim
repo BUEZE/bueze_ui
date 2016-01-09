@@ -28,7 +28,7 @@
             tr class = (book['rank']==1 ? 'books success' : 'books')
               td
                 = book['rank']
-              td
+              td id='bookname'
                 = book['booknames'].tr('"', '')
     div class = 'col-md-6'
       div class = 'panel panel-default'
