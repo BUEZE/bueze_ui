@@ -34,6 +34,31 @@ class AppController < Sinatra::Base
     slim :user_list
   end
 
+  app_get_books = lambda do
+    @books_name = params[:books_name]
+
+    logger.info "Search book : #{@books_name}"
+    begin
+      @string = ''
+      @book_search_result =  [{ 'bookname' => 'hiraku', 'rank' => 10, 'price' => 200, 'ori_price' => 201, 'bookstore' => 'taaze','link' => 'http://www.rubydoc.info/gems/slim/toplevel' },
+                              { 'bookname' => 'hiraku', 'rank' => 10, 'price' => 200, 'ori_price' => 199, 'bookstore' => 'booktw','link' => 'http://www.google.tw' }
+                              ]
+      @search_length = @book_search_result.length.to_s
+    rescue
+      flash[:notice] = 'Could not access Bueze - please try again later'
+      logger.info 'Could not access the site'
+    end
+
+    if @books_name && @books_name.nil?
+      puts ("bookname: "+@books_name)
+      flash[:notice] = 'Books not found' if @books_name.nil?
+      redirect '/'
+      return nil
+    end
+
+    slim :book_search
+  end
+
   app_get_userinfo = lambda do
     @user_id = params[:user_id]
     logger.info "http://bueze.herokuapp.com/api/v1/user/#{@user_id}"
@@ -102,6 +127,7 @@ class AppController < Sinatra::Base
   # Web App Views Routes
   get '/', &app_get_root
   get '/user', &app_get_user
+  get '/books/:books_name', &app_get_books
   get '/user/:user_id', &app_get_userinfo
   get '/user_chart/:user_id', &app_get_userchart
   get '/ranking_chart', &app_get_rankingchart

@@ -1,0 +1,73 @@
+/ # For chart:
+link rel='stylesheet' type='text/css' href='/book_search.css'
+script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' type='text/javascript'
+script src='//code.highcharts.com/highcharts.js' type='text/javascript'
+script src='/chartkick.js', type='text/javascript'
+
+.container
+
+  -if @books_name
+      h4 = 'Searching results of \'' + @books_name +'\''
+      p = 'There are ' + @search_length + ' results...'
+
+      div class = 'col-md-12'
+        div class = 'panel panel-default'
+          table class='table ranking_table'
+            tbody
+              tr
+                th
+                  p class = 'text-center'
+                   = 'Rank'
+                th
+                  p class = 'text-center'
+                   = 'Image'
+                th
+                  p class = 'text-center'
+                   = 'Title'
+                th
+                  p class = 'text-center'
+                   = 'Author'
+                th
+                  p class = 'text-center'
+                   = 'Price'
+                th
+                  p class = 'text-center'
+                   = 'Original Price'
+                th
+                  p class = 'text-center'
+                   = 'Book Store'
+            -@book_search_result.each_with_index do |book, index|
+              -puts(book['rank'])
+              tr class = (book['bookname']==1 ? 'books exist' : 'books')
+                td class = 'col-md-1 text-center'
+                  = index+1
+
+                td id='bookimage' class = 'col-md-2 text-center'
+                  a< href = book['link']
+                    img src="http://i.imgur.com/Ari531p.jpg" width="120px"/
+                td id='bookname' class = 'text-center'
+                  a< href = book['link']
+                    = book['bookname']
+                td id='author' class = 'text-center'
+                  = book['bookname']
+
+                -if book['price'] >= book['ori_price']
+                  td id='price_red' class = 'text-center'
+                    = book['price']
+                -else
+                  td id='price_green' class = 'text-center'
+                    = book['price']
+                td id='ori_price' class = 'text-center'
+                  = book['ori_price']
+
+                -if book['bookstore'] == 'taaze'
+                  td id='bookstore' class = 'book-store-center'
+                    a< href = 'http://www.taaze.tw/'
+                      img src="../image/taaze.png" width="80px"/
+                -else
+                  td id='bookstore' class = 'book-store-center'
+                    a< href = 'http://www.books.com.tw'
+                      img src="../image/bookstw.png" width="80px"/
+
+
+      

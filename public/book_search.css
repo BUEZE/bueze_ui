@@ -1,0 +1,17 @@
+#price_green{
+  color: #44B39C;
+}
+
+#price_red{
+  color: #FF6057;
+}
+
+.text-center{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.book-store-center{
+  text-align: center;
+  color: #FF6057;
+}
