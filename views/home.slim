@@ -2,7 +2,8 @@
   link rel='stylesheet' type='text/css' href='/home.css'
   script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' type='text/javascript'
   script src='//code.highcharts.com/highcharts.js' type='text/javascript'
-  script src='/chartkick.js', type='text/javascript'
+  script src='/chartkick.js' type='text/javascript'
+  script src='/home.js', type='text/javascript'
 
   h2 Welcome to Bueze
 
@@ -10,17 +11,19 @@
     ol class = 'breadcrumb'
       li
         a href = '#' = 'Monthly'
+      li
+        a href = '#' = 'Weekly'
       li class = 'active' = 'Daily'
     h3 = "Today's Top 10"
     div class = 'col-md-6'
-      div class = 'panel panel-default ranking_table'
-        table class='table'
+      div class = 'panel panel-default'
+        table class='table ranking_table'
           tbody
             tr
               th Rank
               th Title
           -@ranking.each_with_index do |book, index|
-            tr
+            tr class = 'books'
               td
                 = book['rank']
               td
@@ -28,5 +31,6 @@
     div class = 'col-md-6'
       div class = 'panel panel-default'
         div class = 'panel-heading'
-          h5 = 'Visualization'
+          h5 id = 'book_title' = @ranking[0]['booknames'].tr('"', '')
         div class = 'panel-body'
+        div id = 'ranking_vis'
