@@ -19,6 +19,7 @@ class AppController < Sinatra::Base
   end
 
   app_get_root = lambda do
+    @ranking = HTTParty.get bueze_api_url("bookranking/#{Date.new(2016, 1, 7)}")
     slim :home
   end
 
@@ -82,9 +83,20 @@ class AppController < Sinatra::Base
     slim :user_chart
   end
 
+  app_get_rankingchart = lambda do
+    begin
+      @history_ranking = Hash['2016-01-02' => 1, '2016-01-03' => 3, '2016-01-04' => 5, '2016-01-05' => 7, '2016-01-06' => 5, '2016-01-07' => 5, '2016-01-08' => 1]
+    rescue
+      flash[:notice] = 'Could not access Bueze - please try again later'
+      logger.info 'Could not access the site'
+    end
+    @history_ranking.to_json
+  end
+
   # Web App Views Routes
   get '/', &app_get_root
   get '/user', &app_get_user
   get '/user/:user_id', &app_get_userinfo
   get '/user_chart/:user_id', &app_get_userchart
+  get '/ranking_chart', &app_get_rankingchart
 end
