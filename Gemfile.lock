@@ -127,6 +127,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  addressable
   chartkick
   headless
   hirb

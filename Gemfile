@@ -16,6 +16,7 @@ gem 'chartkick'
 
 gem 'virtus'
 gem 'page-object'
+gem 'addressable'
 
 group :test do
   gem 'minitest'
