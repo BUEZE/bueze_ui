@@ -1,16 +1,25 @@
 .container
+  link rel='stylesheet' type='text/css' href='/home.css'
+
   h2 Welcome to Bueze
 
   -if @ranking
+    ol class = 'breadcrumb'
+      li
+        a href = '#' = 'Monthly'
+      li class = 'active' = 'Daily'
     h3 = "Today's Top 10"
-    table class='ranking_table'
-      tbody
-        tr
-          th Rank
-          th Title
-      -@ranking.each_with_index do |book, index|
-        tr
-          td
-            = book['rank']
-          td
-            a = book['booknames']
+    div class = 'col-md-6'
+      div class = 'panel panel-default ranking_table'
+        table class='table'
+          tbody
+            tr
+              th Rank
+              th Title
+          -@ranking.each_with_index do |book, index|
+            tr
+              td
+                = book['rank']
+              td
+                a = book['booknames']
+    div class = 'col-md-6'
