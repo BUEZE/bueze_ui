@@ -35,6 +35,17 @@ class AppController < Sinatra::Base
     slim :user_list
   end
 
+  app_get_book = lambda do
+    @books_name = params[:books_name]
+
+    if @books_name
+      redirect "/books/#{@books_name}"
+      return nil
+    end
+
+    slim :user_list
+  end
+
   app_get_books = lambda do
     @books_name = params[:books_name]
 
@@ -231,6 +242,7 @@ class AppController < Sinatra::Base
   # Web App Views Routes
   get '/', &app_get_root
   get '/user', &app_get_user
+  get '/books', &app_get_book
   get '/books/:books_name', &app_get_books
   get '/user/:user_id', &app_get_userinfo
   get '/user_chart/:user_id', &app_get_userchart

@@ -9,6 +9,14 @@
 
   h2 Welcome to Bueze
 
+  br
+  h3 Search Book's prices
+  form action='/books' method='get' id='user-form'
+    input type='text' name='books_name' id='home-form-userid' placeholder='Enter book name'
+    input type='submit' id='home-form-submit' class='submit' value='Search'
+  br
+  br
+  br
   -if @ranking
     ol class = 'breadcrumb'
       li
