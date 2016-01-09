@@ -23,7 +23,7 @@
               th Rank
               th Title
           -@ranking.each_with_index do |book, index|
-            tr class = 'books'
+            tr class = (book['rank']==1 ? 'books success' : 'books')
               td
                 = book['rank']
               td
