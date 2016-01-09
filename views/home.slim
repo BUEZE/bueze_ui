@@ -1,5 +1,8 @@
 .container
   link rel='stylesheet' type='text/css' href='/home.css'
+  script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' type='text/javascript'
+  script src='//code.highcharts.com/highcharts.js' type='text/javascript'
+  script src='/chartkick.js', type='text/javascript'
 
   h2 Welcome to Bueze
 
@@ -21,5 +24,9 @@
               td
                 = book['rank']
               td
-                a = book['booknames']
+                = book['booknames'].tr('"', '')
     div class = 'col-md-6'
+      div class = 'panel panel-default'
+        div class = 'panel-heading'
+          h5 = 'Visualization'
+        div class = 'panel-body'
