@@ -35,31 +35,6 @@ class AppController < Sinatra::Base
     slim :user_list
   end
 
-  app_get_books = lambda do
-    @books_name = params[:books_name]
-
-    logger.info "Search book : #{@books_name}"
-    begin
-      @string = ''
-      @book_search_result =  [{ 'bookname' => 'hiraku', 'rank' => 10, 'price' => 200, 'ori_price' => 201, 'bookstore' => 'taaze','link' => 'http://www.rubydoc.info/gems/slim/toplevel' },
-                              { 'bookname' => 'hiraku', 'rank' => 10, 'price' => 200, 'ori_price' => 199, 'bookstore' => 'booktw','link' => 'http://www.google.tw' }
-                              ]
-      @search_length = @book_search_result.length.to_s
-    rescue
-      flash[:notice] = 'Could not access Bueze - please try again later'
-      logger.info 'Could not access the site'
-    end
-
-    if @books_name && @books_name.nil?
-      puts ("bookname: "+@books_name)
-      flash[:notice] = 'Books not found' if @books_name.nil?
-      redirect '/'
-      return nil
-    end
-
-    slim :book_search
-  end
-
   app_get_userinfo = lambda do
     @user_id = params[:user_id]
     logger.info "http://bueze.herokuapp.com/api/v1/user/#{@user_id}"
@@ -140,12 +115,101 @@ class AppController < Sinatra::Base
     end
   end
 
+  app_get_weeklyrankinglist = lambda do
+    begin
+      ranking_of_week = []
+      @startdate = Date.parse(params[:daterange].split('&')[0].to_s).prev_day
+      @enddate = Date.parse(params[:daterange].split('&')[1].to_s).prev_day
+      week_range = (@startdate..@enddate)
+      week_range.each do |date|
+        day_ranking = HTTParty.get bueze_api_url("bookranking/#{date}")
+        ranking_of_week << day_ranking
+      end
+
+      week_ranking_hash = Hash.new { 0 }
+      ranking_of_week.each do |dailylist|
+        dailylist.each do |book|
+          week_ranking_hash[book['booknames']] += (11 - book['rank'])
+        end
+      end
+
+      week_ranking = week_ranking_hash.sort_by { |k, v| v }.reverse
+      result = []
+      week_ranking.each_with_index do |book, index|
+        break if index > 9
+        found_book = false
+        ranking_of_week.each do |dailylist|
+          break if found_book == true
+          JSON.parse(dailylist.to_json).each do |daily_book|
+            if daily_book['booknames'] == book[0]
+              new_book = daily_book
+              new_book['rank'] = index + 1
+              result << new_book
+              found_book = true
+              break
+            end
+          end
+        end
+      end
+      @ranking = result
+      slim :weekly_ranking_list
+    rescue
+      flash[:notice] = 'Could not check daily ranking list, please check later'
+      logger.info 'Could not access the site'
+    end
+  end
+
+  app_get_monthlyrankinglist = lambda do
+    begin
+      ranking_of_week = []
+      @startdate = Date.parse(params[:daterange].split('&')[0].to_s).prev_day
+      @enddate = Date.parse(params[:daterange].split('&')[1].to_s).prev_day
+      week_range = (@startdate..@enddate)
+      week_range.each do |date|
+        day_ranking = HTTParty.get bueze_api_url("bookranking/#{date}")
+        ranking_of_week << day_ranking
+      end
+
+      week_ranking_hash = Hash.new { 0 }
+      ranking_of_week.each do |dailylist|
+        dailylist.each do |book|
+          week_ranking_hash[book['booknames']] += (11 - book['rank'])
+        end
+      end
+
+      week_ranking = week_ranking_hash.sort_by { |k, v| v }.reverse
+      result = []
+      week_ranking.each_with_index do |book, index|
+        break if index > 9
+        found_book = false
+        ranking_of_week.each do |dailylist|
+          break if found_book == true
+          JSON.parse(dailylist.to_json).each do |daily_book|
+            if daily_book['booknames'] == book[0]
+              new_book = daily_book
+              new_book['rank'] = index + 1
+              result << new_book
+              found_book = true
+              break
+            end
+          end
+        end
+      end
+      @ranking = result
+      slim :monthly_ranking_list
+    rescue
+      flash[:notice] = 'Could not check daily ranking list, please check later'
+      logger.info 'Could not access the site'
+    end
+  end
+
   # Web App Views Routes
   get '/', &app_get_root
   get '/user', &app_get_user
-  get '/books/:books_name', &app_get_books
   get '/user/:user_id', &app_get_userinfo
   get '/user_chart/:user_id', &app_get_userchart
   get '/ranking_chart', &app_get_rankingchart
   get '/daily_ranking_list/:date', &app_get_dailyrankinglist
+  get '/weekly_ranking_list/:daterange', &app_get_weeklyrankinglist
+  get '/monthly_ranking_list/:daterange', &app_get_monthlyrankinglist
 end

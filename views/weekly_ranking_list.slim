@@ -12,7 +12,7 @@
   -if @ranking
     ol class = 'breadcrumb'
       li
-        a href = '#' = 'Monthly'
+        a href= "../monthly_ranking_list/#{Date.parse(Date.today.to_s[0..-3] + '01')}&#{Date.today}" = 'Monthly'
       li class = 'active' = 'Weekly'
       li
         a href= "../daily_ranking_list/#{Date.today}" = 'Daily'

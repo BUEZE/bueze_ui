@@ -12,9 +12,9 @@
   -if @ranking
     ol class = 'breadcrumb'
       li
-        a href = '#' = 'Monthly'
+        a href= "../monthly_ranking_list/#{Date.parse(Date.today.to_s[0..-3] + '01')}&#{Date.today}" = 'Monthly'
       li
-        a href = '#' = 'Weekly'
+        a href= "../weekly_ranking_list/#{Date.today - 6}&#{Date.today}" = 'Weekly'
       li class = 'active' = 'Daily'
     h3 = "Top 10 of #{@date}"
     div id='list_navigator'
