@@ -15,3 +15,21 @@
   text-align: center;
   color: #FF6057;
 }
+
+.fontmid{
+  text-align: center;
+  font-size: 130%;
+}
+
+.fontbig{
+  text-align: center;
+  font-size: 180%;
+}
+
+.noborder{
+  border: 0;
+}
+
+.wid1{
+  width: 5px;
+}
