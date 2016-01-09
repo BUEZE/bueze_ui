@@ -16,11 +16,12 @@
       li
         a href = '#' = 'Weekly'
       li class = 'active' = 'Daily'
-    h3 = "Today's Top 10"
+    h3 = "Top 10 of #{@date}"
     div id='list_navigator'
       div id='prev_list' 
-        a href= "../daily_ranking_list/#{Date.today.prev_day}" target='' = 'Prev'
-      div id='next_list' = 'Next'
+        a href= "../daily_ranking_list/#{@date.prev_day}" target='' = 'Prev'
+      div id='next_list'
+        a href= "../daily_ranking_list/#{@date.next_day}" target='' = 'Next'
     div class = 'col-md-6'
       div class = 'panel panel-default'
         table class='table ranking_table'

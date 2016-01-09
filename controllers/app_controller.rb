@@ -4,6 +4,7 @@ require 'httparty'
 require 'hirb'
 require 'slim'
 require 'chartkick'
+require 'date'
 
 # Simple web service for taaze api
 class AppController < Sinatra::Base
@@ -19,7 +20,7 @@ class AppController < Sinatra::Base
   end
 
   app_get_root = lambda do
-    @ranking = HTTParty.get bueze_api_url("bookranking/#{Date.new(2016, 1, 7)}")
+    @ranking = HTTParty.get bueze_api_url("bookranking/#{Date.today.prev_day}")
     slim :home
   end
 
@@ -99,10 +100,26 @@ class AppController < Sinatra::Base
     @history_ranking.to_json
   end
 
+  app_get_dailyrankinglist = lambda do
+    begin
+      @date = Date.parse(params[:date].to_s)
+      @ranking = HTTParty.get bueze_api_url("bookranking/#{@date.prev_day}")
+      if @date == Date.today
+        slim :home
+      else
+        slim :daily_ranking_list
+      end
+    rescue
+      flash[:notice] = 'Could not check daily ranking list, please check later'
+      logger.info 'Could not access the site'
+    end
+  end
+
   # Web App Views Routes
   get '/', &app_get_root
   get '/user', &app_get_user
   get '/user/:user_id', &app_get_userinfo
   get '/user_chart/:user_id', &app_get_userchart
   get '/ranking_chart', &app_get_rankingchart
+  get '/daily_ranking_list/:date', &app_get_dailyrankinglist
 end

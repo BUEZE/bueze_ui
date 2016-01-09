@@ -16,3 +16,16 @@ body {
 	display: inline;
 	padding-left: 10px;
 }
+
+#prev_list {
+	display: inline;
+}
+
+#next_list {
+	display: inline;
+	padding-left: 10px;
+}
+
+#list_navigator {
+	height: 30px;
+}
