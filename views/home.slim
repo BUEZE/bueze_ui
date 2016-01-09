@@ -1,2 +1,16 @@
 .container
   h2 Welcome to Bueze
+
+  -if @ranking
+    h3 = "Today's Top 10"
+    table class='ranking_table'
+      tbody
+        tr
+          th Rank
+          th Title
+      -@ranking.each_with_index do |book, index|
+        tr
+          td
+            = book['rank']
+          td
+            a = book['booknames']

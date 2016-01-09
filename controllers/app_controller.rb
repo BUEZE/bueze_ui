@@ -19,6 +19,7 @@ class AppController < Sinatra::Base
   end
 
   app_get_root = lambda do
+    @ranking = HTTParty.get bueze_api_url("bookranking/#{Date.new(2016, 1, 7)}")
     slim :home
   end
 
