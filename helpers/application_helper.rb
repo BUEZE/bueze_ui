@@ -1,3 +1,5 @@
+require 'addressable/uri'
+
 module ApplicationHelpers
 
   API_BASE_URI = 'http://bueze.herokuapp.com'
@@ -11,7 +13,7 @@ module ApplicationHelpers
   end
 
   def bueze_api_url(resource)
-    URI.join(API_BASE_URI, API_VER, resource).to_s
+    Addressable::URI.join(API_BASE_URI, API_VER, resource).to_s
   end
 
 end
