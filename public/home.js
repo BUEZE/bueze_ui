@@ -49,7 +49,7 @@ var addTagCloud = function(tags) {
 
 function draw(words) {
   d3.select("#tag_vis").append("svg")
-      .attr("width", $('#tag_vis').width())
+      .attr("width", 300)
       .attr("height", 300)
     .append("g")
       .attr("transform", "translate(150,150)")
