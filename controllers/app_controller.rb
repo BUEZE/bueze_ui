@@ -58,7 +58,7 @@ class AppController < Sinatra::Base
         return nil
       end
       @search_length = @book_search_result.length.to_s
-      
+
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
       logger.info 'Could not access the site'
@@ -135,6 +135,18 @@ class AppController < Sinatra::Base
       logger.info 'Could not access the site'
     end
     @history_ranking.to_json
+  end
+
+  app_get_bookinfo = lambda do
+    begin
+      content_type :json, charset: 'utf-8'
+      @name = params[:name]
+      @tags = HTTParty.get URI.encode(bueze_api_url("search_book_tags/#{@name}"))
+    rescue
+      flash[:notice] = 'Could not access Bueze - please try again later'
+      logger.info 'Could not access the site'
+    end
+    {'tags': @tags}.to_json
   end
 
   app_get_dailyrankinglist = lambda do
@@ -241,6 +253,7 @@ class AppController < Sinatra::Base
   get '/user', &app_get_user
   get '/booksearch', &app_get_book
   get '/booksearch/:books_name', &app_get_books
+  get '/bookinfo', &app_get_bookinfo
   get '/user/:user_id', &app_get_userinfo
   get '/user_chart/:user_id', &app_get_userchart
   get '/ranking_chart', &app_get_rankingchart
