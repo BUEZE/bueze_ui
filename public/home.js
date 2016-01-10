@@ -33,7 +33,16 @@ window.onload = function () {
         // replaceRank();
       });
   });
+
+  alignNavbar();
+  d3.select("#landingicon").transition().style('opacity', 1).duration(1000)
+  d3.select("#landingtitle").transition().style('opacity', 1).duration(1000).delay(1000)
+  d3.select("#landingsubtitle").transition().style('opacity', 1).duration(1000).delay(1000)
 };
+
+window.onresize = function() {
+  alignNavbar();
+}
 
 var addTagCloud = function(tags) {
   d3.layout.cloud().size([300, 300])
@@ -72,4 +81,10 @@ function replaceRank() {
       $(item.childNodes[item.childNodes.length - 1]).text('x');
     };
   });
+}
+
+function alignNavbar() {
+  var navPadding = ($("body").width() - $(".container").width()) / 2;
+  $("a.navbar-brand").css('margin-left', navPadding + 'px');
+  $("#user-form").css('margin-right', navPadding + 'px');
 }

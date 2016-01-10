@@ -32,13 +32,13 @@ section {
 	padding-bottom: 100px;
 }
 
-
 #landingicon {
 	background-image: url('../image/logo.png');
 	background-repeat: no-repeat;
 	background-size: auto 250px;
 	background-position: center;
 	height: 250px;
+	opacity: 0;
 }
 
 #landingtitle {
@@ -50,6 +50,7 @@ section {
 	font-weight: 100;
 	text-shadow: rgba(0, 0, 0, 0.5) 2px 2px 3px;
 	text-align: center;
+	opacity: 0;
 }
 
 #landingsubtitle {
@@ -59,4 +60,5 @@ section {
 	font-weight: 100;
 	text-shadow: rgba(0, 0, 0, 0.5) 2px 2px 3px;
 	text-align: center;
+	opacity: 0;
 }
