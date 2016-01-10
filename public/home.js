@@ -10,7 +10,7 @@ window.onload = function () {
 
   $.get( "/ranking_chart", {name: $( '.success' ).find('td#bookname').html()})
     .done(function( data ) {
-      new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 0, max: 10}}});
+      new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
       addTagCloud(["埋冤人物誌", "2015 TOP 不只100", "台日交流歷史"]);
     });
 
@@ -27,9 +27,8 @@ window.onload = function () {
 
     $.get( "/ranking_chart", {name: title})
       .done(function( data ) {
-        // console.log(data)
         $('#book_title').html(title);
-        new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 0, max: 10}}});
+        new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
         addTagCloud(["動物", "考古", "歷史"]);
         // replaceRank();
       });

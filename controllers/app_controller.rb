@@ -124,10 +124,14 @@ class AppController < Sinatra::Base
     begin
       content_type :json, charset: 'utf-8'
       @name = params[:name]
-      @history_ranking = Hash[]
+      @history_ranking = Hash.new{ 11 }
       @history_rankings = HTTParty.get URI.encode(bueze_api_url("get_bookhistory/#{@name}"))
-      @history_rankings.each do |ranking|
-        @history_ranking[ranking['date']] = ranking['rank']
+      startdate = Date.parse(@history_rankings[0]['date'].to_s)
+      (startdate..Date.today).each do |date|
+        @history_ranking[date.to_s] = 11
+        @history_rankings.each do |ranking|
+          @history_ranking[ranking['date']] = ranking['rank'] if date.to_s == ranking['date']
+        end
       end
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
