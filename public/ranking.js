@@ -46,6 +46,7 @@ window.onload = function () {
     $.get( "/ranking_chart", {name: title})
       .done(function( data ) {
         $('#book_title').html(title);
+        $('#info_tab a[href="#ranking"]').tab('show');
         new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
         waitingDialog.hide();
       });
