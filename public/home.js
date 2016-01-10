@@ -15,23 +15,11 @@ function alignNavbar() {
   $("#booksearch-form").css('margin-right', navPadding + 'px');
 }
 
-function hoverChartIcon(element) {
-  element.setAttribute('src', '../svg/line_chart_hover.svg');
+function hoverIcon(element) {
+  var unhoversrc = d3.select(element).attr('src');
+  d3.select(element).attr('src', unhoversrc.substring(0, unhoversrc.length - 4) + '_hover.svg');
 }
-function unhoverChartIcon(element) {
-  element.setAttribute('src', '../svg/line_chart.svg');
-}
-
-function hoverSearchIcon(element) {
-  element.setAttribute('src', '../svg/search_hover.svg');
-}
-function unhoverSearchIcon(element) {
-  element.setAttribute('src', '../svg/search.svg');
-}
-
-function hoverPriceIcon(element) {
-  element.setAttribute('src', '../svg/price_hover.svg');
-}
-function unhoverPriceIcon(element) {
-  element.setAttribute('src', '../svg/price.svg');
+function unhoverIcon(element) {
+  var unhoversrc = d3.select(element).attr('src');
+  d3.select(element).attr('src', unhoversrc.substring(0, unhoversrc.length - 10) + '.svg');
 }
