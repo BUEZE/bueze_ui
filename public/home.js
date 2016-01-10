@@ -32,12 +32,6 @@ window.onload = function () {
       new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
     });
 
-  // $.get( "/bookinfo", {name: $( '.success' ).find('td#bookname').html()})
-  //   .done(function( data ) {
-  //     console.log(data);
-  //     addTagCloud(data.tags[0].tags.tags);
-  //   });
-
   $('.books').on('click', function(){
     if($( this ).hasClass('success'))
       return;
