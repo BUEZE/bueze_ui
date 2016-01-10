@@ -2,6 +2,25 @@ var fill = d3.scale.category20();
 
 window.onload = function () {
 
+  $('#info_tab a[href="#tags"]').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+    if (!$( "#tag_vis" ).has( "svg" ).length){
+      waitingDialog.show('Fetching tags...', {dialogSize: 'sm', progressType: 'warning'});
+      var title = $( '#book_title' ).html();
+      $.get( "/bookinfo", {name: title})
+        .done(function( data ) {
+          addTagCloud(data.tags.tags);
+          waitingDialog.hide();
+        });
+    }
+  });
+
+  $('#info_tab a[href="#ranking"]').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+
   $('#ranking_vis').highcharts({
     yAxis: {
       reversed: true
@@ -11,13 +30,13 @@ window.onload = function () {
   $.get( "/ranking_chart", {name: $( '.success' ).find('td#bookname').html()})
     .done(function( data ) {
       new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
-      addTagCloud(["埋冤人物誌", "2015 TOP 不只100", "台日交流歷史"]);
     });
 
   $('.books').on('click', function(){
     if($( this ).hasClass('success'))
       return;
 
+    waitingDialog.show('Loading messages...', {dialogSize: 'sm', progressType: 'success'});
     var title = $( this ).find('td#bookname').html();
     $('svg').remove();
     $('.books').each(function() {
@@ -29,8 +48,7 @@ window.onload = function () {
       .done(function( data ) {
         $('#book_title').html(title);
         new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
-        addTagCloud(["動物", "考古", "歷史"]);
-        // replaceRank();
+        waitingDialog.hide();
       });
   });
 };
@@ -70,6 +88,68 @@ function replaceRank() {
   d3.select('svg').selectAll('g')[0].forEach(function(item){
     if (d3.select(item).attr('class') == 'highcharts-axis-labels highcharts-yaxis-labels') {
       $(item.childNodes[item.childNodes.length - 1]).text('x');
-    };
+    }
   });
 }
+
+var waitingDialog = waitingDialog || (function ($) {
+    'use strict';
+
+	// Creating modal dialog's DOM
+	var $dialog = $(
+		'<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
+		'<div class="modal-dialog modal-m">' +
+		'<div class="modal-content">' +
+			'<div class="modal-header"><h3 style="margin:0;"></h3></div>' +
+			'<div class="modal-body">' +
+				'<div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>' +
+			'</div>' +
+		'</div></div></div>');
+
+	return {
+		/**
+		 * Opens our dialog
+		 * @param message Custom message
+		 * @param options Custom options:
+		 * 				  options.dialogSize - bootstrap postfix for dialog size, e.g. "sm", "m";
+		 * 				  options.progressType - bootstrap postfix for progress bar type, e.g. "success", "warning".
+		 */
+		show: function (message, options) {
+			// Assigning defaults
+			if (typeof options === 'undefined') {
+				options = {};
+			}
+			if (typeof message === 'undefined') {
+				message = 'Loading';
+			}
+			var settings = $.extend({
+				dialogSize: 'm',
+				progressType: '',
+				onHide: null // This callback runs after the dialog was hidden
+			}, options);
+
+			// Configuring dialog
+			$dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
+			$dialog.find('.progress-bar').attr('class', 'progress-bar');
+			if (settings.progressType) {
+				$dialog.find('.progress-bar').addClass('progress-bar-' + settings.progressType);
+			}
+			$dialog.find('h3').text(message);
+			// Adding callbacks
+			if (typeof settings.onHide === 'function') {
+				$dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
+					settings.onHide.call($dialog);
+				});
+			}
+			// Opening dialog
+			$dialog.modal();
+		},
+		/**
+		 * Closes dialog
+		 */
+		hide: function () {
+			$dialog.modal('hide');
+		}
+	};
+
+})(jQuery);
