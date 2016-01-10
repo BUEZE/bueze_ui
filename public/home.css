@@ -6,10 +6,57 @@
   cursor: auto;
 }
 
+section {
+	margin-top: -30px;
+}
+
 #book_title{
   text-align: center;
 }
 
 #tag_vis{
   text-align: center;
+}
+
+#home-form-submit {
+	margin-left: 10px;
+}
+
+#landingview {
+	background: linear-gradient(180deg, rgba(20,0,20,0.5), rgba(20,0,20,0.6)), url('../image/landing_background.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 800px;
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+
+
+#landingicon {
+	background-image: url('../image/logo.png');
+	background-repeat: no-repeat;
+	background-size: auto 250px;
+	background-position: center;
+	height: 250px;
+}
+
+#landingtitle {
+	margin-top: 50px;
+	margin-bottom: -30px;
+	color: white;
+	font-size: 8em;
+	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: 100;
+	text-shadow: rgba(0, 0, 0, 0.5) 2px 2px 3px;
+	text-align: center;
+}
+
+#landingsubtitle {
+	color: white;
+	font-size: 2.5em;
+	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: 100;
+	text-shadow: rgba(0, 0, 0, 0.5) 2px 2px 3px;
+	text-align: center;
 }
