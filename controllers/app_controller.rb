@@ -52,16 +52,6 @@ class AppController < Sinatra::Base
     logger.info "Search book : #{@books_name}"
     begin
       @book_search_result = HTTParty.get URI.encode(bueze_api_url("search_book/#{@books_name}"))
-      # {"source"=>"taaze", 
-      #   "img"=>"'http://media.taaze.tw/showLargeImage.html?sc=11100683149&width=162&height=255'", 
-      #   "author"=>"木村衣有子", 
-      #   "bookname"=>"京都生活關鍵字：從百年老舖到喫茶店，體驗26種美好在地生活 ", 
-      #   "ori_price"=>"320", 
-      #   "price"=>"199", 
-      #   "link"=>"http://www.taaze.tw/usedList.html?oid=11100683149", 
-      #   "id"=>"11100683149"
-      # }
-      
       @search_length = @book_search_result.length.to_s
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
@@ -69,7 +59,6 @@ class AppController < Sinatra::Base
     end
 
     if @books_name && @books_name.nil?
-      puts ("bookname: "+@books_name)
       flash[:notice] = 'Books not found' if @books_name.nil?
       redirect '/'
       return nil
