@@ -47,7 +47,7 @@ script src='/chartkick.js', type='text/javascript'
 
                 td id='bookimage' class = 'col-md-2 text-center'
                   a< href = book['link']
-                    img src="http://i.imgur.com/Ari531p.jpg" width="120px"/
+                    img src=book['img'] width="120px"/
                 td id='bookname' class = 'text-center fontmid'
                   a< href = book['link']
                     = book['bookname']
@@ -69,7 +69,7 @@ script src='/chartkick.js', type='text/javascript'
                   = book['ori_price']
                     
 
-                -if book['bookstore'] == 'taaze'
+                -if book['source'] == 'taaze'
                   td id='bookstore' class = 'book-store-center'
                     a< href = 'http://www.taaze.tw/'
                       img src="../image/taaze.png" width="80px"/
