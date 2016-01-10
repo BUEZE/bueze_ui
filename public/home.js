@@ -27,6 +27,11 @@ window.onload = function () {
     }
   });
 
+  $.get( "/bookinfo", {name: $( '.success' ).find('td#bookname').html()})
+    .done(function( data ) {
+      addTagCloud(data.tags[0].tags.tags);
+    });
+
   $.get( "/ranking_chart", {name: $( '.success' ).find('td#bookname').html()})
     .done(function( data ) {
       new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
@@ -43,6 +48,11 @@ window.onload = function () {
       $( this ).removeClass('success');
     });
     $( this ).addClass('success');
+
+    $.get( "/bookinfo", {name: title})
+      .done(function( data ) {
+        addTagCloud(data.tags[0].tags.tags);
+      });
 
     $.get( "/ranking_chart", {name: title})
       .done(function( data ) {
