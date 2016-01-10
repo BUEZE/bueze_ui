@@ -1,3 +1,8 @@
 #footer-menu {
 	background-color: rgba(30, 30, 30, 1);
 }
+
+.copyright{
+	color: rgba(255, 255, 255, 0.4);
+	text-align: center;
+}
