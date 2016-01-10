@@ -52,13 +52,8 @@ class AppController < Sinatra::Base
     logger.info "Search book : #{@books_name}"
     begin
       @book_search_result = HTTParty.get URI.encode(bueze_api_url("search_book/#{@books_name}"))
-      if @book_search_result == null
-        @book_search_result = [1]
-        redirect '/'
-        return nil
-      end
       @search_length = @book_search_result.length.to_s
-      
+      slim :book_search
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
       logger.info 'Could not access the site'
