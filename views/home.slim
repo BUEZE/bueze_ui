@@ -5,7 +5,8 @@
   script src='/chartkick.js' type='text/javascript'
   script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js'
   script src='/d3.layout.cloud.js'
-  script src='/home.js', type='text/javascript'
+  script src='/home.js' type='text/javascript'
+  script src='/bootstrap/js/bootstrap.min.js' type='text/javascript'
 
   h2 Welcome to Bueze
 
@@ -26,7 +27,7 @@
       li class = 'active' = 'Daily'
     h3 = "Today's Top 10"
     div id='list_navigator'
-      div id='prev_list' 
+      div id='prev_list'
         a href= "../daily_ranking_list/#{Date.today.prev_day}" target='' = 'Prev'
       div id='next_list' = 'Next'
     div class = 'col-md-6'
@@ -47,5 +48,14 @@
         div class = 'panel-heading'
           h5 id = 'book_title' = @ranking[0]['booknames'].tr('"', '')
         div class = 'panel-body'
-        div id = 'ranking_vis'
-        div id = 'tag_vis'
+        div
+          ul class="nav nav-tabs" role="tablist" id="info_tab"
+            li role="presentation" class="active"
+              a href="#ranking" aria-controls="ranking" role="tab" data-toggle="tab" = 'Ranking'
+            li role="presentation"
+              a href="#tags" aria-controls="tags" role="tab" data-toggle="tab" = 'Tags'
+          div class="tab-content"
+            div role="tabpanel" class="tab-pane active" id="ranking"
+              div id="ranking_vis"
+            div role="tabpanel" class="tab-pane" id="tags"
+              div id="tag_vis"

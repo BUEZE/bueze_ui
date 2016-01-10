@@ -145,11 +145,12 @@ class AppController < Sinatra::Base
       content_type :json, charset: 'utf-8'
       @name = params[:name]
       @tags = HTTParty.get URI.encode(bueze_api_url("search_book_tags/#{@name}"))
+      @book = HTTParty.get URI.encode(bueze_api_url("search_book/#{@name}"))
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
       logger.info 'Could not access the site'
     end
-    {'tags': @tags}.to_json
+    {'book': @book, 'tags': @tags}.to_json
   end
 
   app_get_dailyrankinglist = lambda do
