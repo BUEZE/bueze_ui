@@ -8,10 +8,14 @@ window.onload = function () {
     }
   });
 
+  $.get( "/bookinfo", {name: $( '.success' ).find('td#bookname').html()})
+    .done(function( data ) {
+      addTagCloud(data.tags[0].tags.tags);
+    });
+
   $.get( "/ranking_chart", {name: $( '.success' ).find('td#bookname').html()})
     .done(function( data ) {
       new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
-      addTagCloud(["埋冤人物誌", "2015 TOP 不只100", "台日交流歷史"]);
     });
 
   $('.books').on('click', function(){
@@ -25,12 +29,15 @@ window.onload = function () {
     });
     $( this ).addClass('success');
 
+    $.get( "/bookinfo", {name: title})
+      .done(function( data ) {
+        addTagCloud(data.tags[0].tags.tags);
+      });
+
     $.get( "/ranking_chart", {name: title})
       .done(function( data ) {
         $('#book_title').html(title);
         new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
-        addTagCloud(["動物", "考古", "歷史"]);
-        // replaceRank();
       });
   });
 };
