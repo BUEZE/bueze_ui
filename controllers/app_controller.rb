@@ -52,9 +52,9 @@ class AppController < Sinatra::Base
     logger.info "Search book : #{@books_name}"
     begin
       @string = ''
-      @book_search_result =  [{ 'bookname' => 'hiraku', 'rank' => 10, 'price' => 200, 'ori_price' => 201, 'bookstore' => 'taaze','link' => 'http://www.rubydoc.info/gems/slim/toplevel' },
+      @book_search_result = [{ 'bookname' => 'hiraku', 'rank' => 10, 'price' => 200, 'ori_price' => 201, 'bookstore' => 'taaze','link' => 'http://www.rubydoc.info/gems/slim/toplevel' },
                               { 'bookname' => 'hiraku', 'rank' => 10, 'price' => 200, 'ori_price' => 199, 'bookstore' => 'booktw','link' => 'http://www.google.tw' }
-                              ]
+                            ]
       @search_length = @book_search_result.length.to_s
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
@@ -62,7 +62,6 @@ class AppController < Sinatra::Base
     end
 
     if @books_name && @books_name.nil?
-      puts ("bookname: "+@books_name)
       flash[:notice] = 'Books not found' if @books_name.nil?
       redirect '/'
       return nil
