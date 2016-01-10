@@ -268,13 +268,8 @@ class AppController < Sinatra::Base
   # Web App Views Routes
   get '/', &app_get_root
   get '/user', &app_get_user
-<<<<<<< HEAD
   get '/booksearch', &app_get_book
   get '/booksearch/:books_name', &app_get_books
-=======
-  get '/books', &app_get_book
-  get '/books/:books_name', &app_get_books
->>>>>>> 9abc945091ad488b7c8a210f1b9a36ff619609e0
   get '/bookinfo', &app_get_bookinfo
   get '/user/:user_id', &app_get_userinfo
   get '/user_chart/:user_id', &app_get_userchart
