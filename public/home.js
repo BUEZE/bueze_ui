@@ -12,5 +12,5 @@ window.onresize = function() {
 function alignNavbar() {
   var navPadding = ($("body").width() - $(".container").width()) / 2;
   $("a.navbar-brand").css('margin-left', navPadding + 'px');
-  $("#user-form").css('margin-right', navPadding + 'px');
+  $("#booksearch-form").css('margin-right', navPadding + 'px');
 }
