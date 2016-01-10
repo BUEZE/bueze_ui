@@ -1,38 +1,18 @@
-.books{
-  cursor: pointer;
-}
-
-.books.success{
-  cursor: auto;
-}
-
 section {
 	margin-top: -30px;
 }
 
-#book_title{
-  text-align: center;
-}
-
-#tag_vis{
-  text-align: center;
-}
-
-#home-form-submit {
-	margin-left: 10px;
-}
-
-#landingview {
+#header-view {
 	background: linear-gradient(180deg, rgba(20,0,20,0.5), rgba(20,0,20,0.6)), url('../image/landing_background.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
-	height: 800px;
+	height: 700px;
 	padding-top: 100px;
 	padding-bottom: 100px;
 }
 
-#landingicon {
+#header-icon {
 	background-image: url('../image/logo.png');
 	background-repeat: no-repeat;
 	background-size: auto 250px;
@@ -41,7 +21,7 @@ section {
 	opacity: 0;
 }
 
-#landingtitle {
+#header-title {
 	margin-top: 50px;
 	margin-bottom: -30px;
 	color: white;
@@ -53,7 +33,7 @@ section {
 	opacity: 0;
 }
 
-#landingsubtitle {
+#header-subtitle {
 	color: white;
 	font-size: 2.5em;
 	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -61,4 +41,29 @@ section {
 	text-shadow: rgba(0, 0, 0, 0.5) 2px 2px 3px;
 	text-align: center;
 	opacity: 0;
+}
+
+.feature-icons {
+	padding: 100px 75px 0px 75px;
+}
+
+.icon-mask {
+	background-color: red;
+}
+
+.feature-title, .feature-subtitle {
+	text-align: center;
+	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: 300;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: rgba(255,255,255,0.8);
+}
+
+#features {
+	padding-bottom: 100px;
+}
+
+body {
+	background-color: rgba(40,30,40,1);
 }
