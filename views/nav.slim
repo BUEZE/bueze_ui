@@ -1,3 +1,4 @@
+link rel='stylesheet' type='text/css' href='/navbar.css'
 #header_wrapper
   nav id='menu' class='navbar navbar-inverse navbar-fixed-top'
     div class='navbar-header'
@@ -10,6 +11,12 @@
         - else
           li
             a href='/' id='home'  Home
+        - if current_page?('daily_ranking_list') || current_page?('weekly_ranking_list') || current_page?('monthly_ranking_list')
+          li class='current_page_item active'
+            a href='/daily_ranking_list/#{Date.today}' id='daliyrankinglist' Ranking
+        - else
+          li
+            a href='/daily_ranking_list/#{Date.today}' id='daliyrankinglist' Ranking
         - if current_page?(('user')||('user_chart'))
           li class='current_page_item active'
             a href='/user' id='user'  Find User
