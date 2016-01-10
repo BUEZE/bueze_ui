@@ -2,6 +2,7 @@ var fill = d3.scale.category20();
 
 window.onload = function () {
 
+<<<<<<< HEAD
   $('#info_tab a[href="#tags"]').click(function (e) {
     e.preventDefault();
     $(this).tab('show');
@@ -27,14 +28,15 @@ window.onload = function () {
     }
   });
 
-  $.get( "/bookinfo", {name: $( '.success' ).find('td#bookname').html()})
-    .done(function( data ) {
-      addTagCloud(data.tags[0].tags.tags);
-    });
-
   $.get( "/ranking_chart", {name: $( '.success' ).find('td#bookname').html()})
     .done(function( data ) {
       new Chartkick.LineChart("ranking_vis", data, {library: {yAxis: {reversed: true, min: 1, max: 10}}});
+    });
+
+  $.get( "/bookinfo", {name: $( '.success' ).find('td#bookname').html()})
+    .done(function( data ) {
+      console.log(data);
+      addTagCloud(data.tags[0].tags.tags);
     });
 
   $('.books').on('click', function(){
