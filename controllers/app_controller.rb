@@ -144,11 +144,14 @@ class AppController < Sinatra::Base
       @pid = HTTParty.get URI.encode(bueze_api_url("search_book_ids/#{@name}"))
       @tags = HTTParty.get URI.encode(bueze_api_url("tags/#{@pid[0]}.json"))
       @book = HTTParty.get URI.encode(bueze_api_url("search_book/#{@name}"))
+      @bookinfo = Hash.new{}
+      @bookinfo['book'] = @book
+      @bookinfo['tags'] = @tags
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
       logger.info 'Could not access the site'
     end
-    Hash['book': @book, 'tags': @tags].to_json
+    @bookinfo.to_json
   end
 
   app_get_dailyrankinglist = lambda do
