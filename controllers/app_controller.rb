@@ -39,11 +39,11 @@ class AppController < Sinatra::Base
     @books_name = params[:books_name]
 
     if @books_name
-      redirect "/books/#{@books_name}"
+      redirect "/booksearch/#{@books_name}"
       return nil
     end
 
-    slim :user_list
+    slim :home
   end
 
   app_get_books = lambda do
@@ -52,30 +52,20 @@ class AppController < Sinatra::Base
     logger.info "Search book : #{@books_name}"
     begin
       @book_search_result = HTTParty.get URI.encode(bueze_api_url("search_book/#{@books_name}"))
-      # {"source"=>"taaze", 
-      #   "img"=>"'http://media.taaze.tw/showLargeImage.html?sc=11100683149&width=162&height=255'", 
-      #   "author"=>"木村衣有子", 
-      #   "bookname"=>"京都生活關鍵字：從百年老舖到喫茶店，體驗26種美好在地生活 ", 
-      #   "ori_price"=>"320", 
-      #   "price"=>"199", 
-      #   "link"=>"http://www.taaze.tw/usedList.html?oid=11100683149", 
-      #   "id"=>"11100683149"
-      # }
-      
+      if @book_search_result == null
+        @book_search_result = [1]
+        redirect '/'
+        return nil
+      end
       @search_length = @book_search_result.length.to_s
+      
     rescue
       flash[:notice] = 'Could not access Bueze - please try again later'
       logger.info 'Could not access the site'
-    end
-
-    if @books_name && @books_name.nil?
-      puts ("bookname: "+@books_name)
       flash[:notice] = 'Books not found' if @books_name.nil?
       redirect '/'
       return nil
     end
-
-    slim :book_search
   end
 
   app_get_userinfo = lambda do
@@ -249,8 +239,8 @@ class AppController < Sinatra::Base
   # Web App Views Routes
   get '/', &app_get_root
   get '/user', &app_get_user
-  get '/books', &app_get_book
-  get '/books/:books_name', &app_get_books
+  get '/booksearch', &app_get_book
+  get '/booksearch/:books_name', &app_get_books
   get '/user/:user_id', &app_get_userinfo
   get '/user_chart/:user_id', &app_get_userchart
   get '/ranking_chart', &app_get_rankingchart
