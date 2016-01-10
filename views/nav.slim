@@ -1,3 +1,4 @@
+link rel='stylesheet' type='text/css' href='/navbar.css'
 #header_wrapper
   nav id='menu' class='navbar navbar-inverse navbar-fixed-top'
     div class='navbar-header'
@@ -10,14 +11,24 @@
         - else
           li
             a href='/' id='home'  Home
+        - if current_page?('daily_ranking_list') || current_page?('weekly_ranking_list') || current_page?('monthly_ranking_list')
+          li class='current_page_item active'
+            a href='/daily_ranking_list/#{Date.today}' id='daliyrankinglist' Ranking
+        - else
+          li
+            a href='/daily_ranking_list/#{Date.today}' id='daliyrankinglist' Ranking
         - if current_page?(('user')||('user_chart'))
           li class='current_page_item active'
             a href='/user' id='user'  Find User
         - else
           li
             a href='/user' id='user'  Find User
+<<<<<<< HEAD
       form class="navbar-form navbar-left" role="search" action='/booksearch' method='get' id='booksearch-form'
+=======
+      form class="navbar-form navbar-right" role="search" action='/books' method='get' id='user-form'
+>>>>>>> 83b72d85b3277400de8f114a2aae8c4d9ce80e2c
         div class="form-group"
-          input type='text' name='books_name' class="form-control" id='home-form-userid' placeholder='Book name here...'
-        button type='submit' id='home-form-submit' class='btn btn-default' value='Search'
+          input type='text' name='books_name' class="form-control" id='home-form-book' placeholder='Book name here...'
+        button type='submit' id='book-form-submit' class='btn btn-default' value='Search'
           span class='glyphicon glyphicon-search' aria-hidden='true'

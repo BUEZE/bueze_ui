@@ -1,0 +1,16 @@
+.books{
+  cursor: pointer;
+}
+
+.books.success{
+  cursor: auto;
+}
+
+
+#book_title{
+  text-align: center;
+}
+
+#tag_vis{
+  text-align: center;
+}

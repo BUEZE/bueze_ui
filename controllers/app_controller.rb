@@ -132,11 +132,28 @@ class AppController < Sinatra::Base
     @history_ranking.to_json
   end
 
+  app_get_bookinfo = lambda do
+    begin
+      content_type :json, charset: 'utf-8'
+      @name = params[:name]
+      @pid = HTTParty.get URI.encode(bueze_api_url("search_book_ids/#{@name}"))
+      @tags = HTTParty.get URI.encode(bueze_api_url("tags/#{@pid[0]}.json"))
+      @book = HTTParty.get URI.encode(bueze_api_url("search_book/#{@name}"))
+      @bookinfo = Hash.new{}
+      @bookinfo['book'] = @book
+      @bookinfo['tags'] = @tags
+    rescue
+      flash[:notice] = 'Could not access Bueze - please try again later'
+      logger.info 'Could not access the site'
+    end
+    @bookinfo.to_json
+  end
+
   app_get_dailyrankinglist = lambda do
     begin
       @date = Date.parse(params[:date].to_s)
       @ranking = HTTParty.get bueze_api_url("bookranking/#{@date.prev_day}")
-      slim @date == Date.today ? :home : :daily_ranking_list
+      slim :daily_ranking_list
     rescue
       flash[:notice] = 'Could not check daily ranking list, please check later'
       logger.info 'Could not access the site'
@@ -236,6 +253,7 @@ class AppController < Sinatra::Base
   get '/user', &app_get_user
   get '/booksearch', &app_get_book
   get '/booksearch/:books_name', &app_get_books
+  get '/bookinfo', &app_get_bookinfo
   get '/user/:user_id', &app_get_userinfo
   get '/user_chart/:user_id', &app_get_userchart
   get '/ranking_chart', &app_get_rankingchart

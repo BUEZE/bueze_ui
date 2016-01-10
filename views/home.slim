@@ -1,46 +1,26 @@
-div id='landingview'
-  div id='landingicon'
-  div id='landingtitle' = 'Welcome to Bueze'
-  div id='landingsubtitle' = 'I love Vicky, Vicky is mine <3'
+link rel='stylesheet' type='text/css' href='/home.css'
+link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Lato:100,300&subset=latin,latin-ext'
+script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' type='text/javascript'
+script src='/chartkick.js' type='text/javascript'
+script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js'
+script src='/d3.layout.cloud.js'
+script src='/home.js', type='text/javascript'
+div id='header-view'
+  div id='header-icon'
+  div id='header-title' = 'Welcome to Bueze'
+  div id='header-subtitle' = 'I love Vicky, Vicky is mine <3'
 .container
-  link rel='stylesheet' type='text/css' href='/home.css'
-  link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Lato:100,300&subset=latin,latin-ext'
-  script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' type='text/javascript'
-  script src='//code.highcharts.com/highcharts.js' type='text/javascript'
-  script src='/chartkick.js' type='text/javascript'
-  script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js'
-  script src='/d3.layout.cloud.js'
-  script src='/home.js', type='text/javascript'
+  div class='col-md-12' id='features'
+    img src='../svg/line_chart.svg' class='col-md-4 feature-icons' id='feature-chart'
+    img src='../svg/search.svg' class='col-md-4 feature-icons' id='feature-search'
+    img src='../svg/price.svg' class='col-md-4 feature-icons' id='feature-price'
+    div class='col-md-4'
+      h2 class='feature-title' = 'Ranking'
+      h4 class='feature-subtitle'= 'Get daily, weekly and monthly top 10 ranking of books.'
+    div class='col-md-4'
+      h2 class='feature-title' = 'Search'
+      h4 class='feature-subtitle'= 'Search book information between different online bookstores.'
+    div class='col-md-4'
+      h2 class='feature-title' = 'Prices'
+      h4 class='feature-subtitle'= 'Compare prices between bookstores, the easiest way save your money!'
   br
-  -if @ranking
-    ol class = 'breadcrumb'
-      li
-        a href= "../monthly_ranking_list/#{Date.parse(Date.today.to_s[0..-3] + '01')}&#{Date.today}" = 'Monthly'
-      li
-        a href= "../weekly_ranking_list/#{Date.today - 6}&#{Date.today}" = 'Weekly'
-      li class = 'active' = 'Daily'
-    h3 = "Today's Top 10"
-    div id='list_navigator'
-      div id='prev_list' 
-        a href= "../daily_ranking_list/#{Date.today.prev_day}" target='' = 'Prev'
-      div id='next_list' = 'Next'
-    div class = 'col-md-6'
-      div class = 'panel panel-default'
-        table class='table ranking_table'
-          tbody
-            tr
-              th Rank
-              th Title
-          -@ranking.each_with_index do |book, index|
-            tr class = (book['rank']==1 ? 'books success' : 'books')
-              td
-                = book['rank']
-              td id='bookname'
-                = book['booknames'].tr('"', '')
-    div class = 'col-md-6'
-      div class = 'panel panel-default'
-        div class = 'panel-heading'
-          h5 id = 'book_title' = @ranking[0]['booknames'].tr('"', '')
-        div class = 'panel-body'
-        div id = 'ranking_vis'
-        div id = 'tag_vis'
