@@ -144,7 +144,7 @@ class AppController < Sinatra::Base
     begin
       @date = Date.parse(params[:date].to_s)
       @ranking = HTTParty.get bueze_api_url("bookranking/#{@date.prev_day}")
-      slim @date == Date.today ? :home : :daily_ranking_list
+      slim :daily_ranking_list
     rescue
       flash[:notice] = 'Could not check daily ranking list, please check later'
       logger.info 'Could not access the site'
