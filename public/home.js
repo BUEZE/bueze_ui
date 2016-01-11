@@ -12,5 +12,14 @@ window.onresize = function() {
 function alignNavbar() {
   var navPadding = ($("body").width() - $(".container").width()) / 2;
   $("a.navbar-brand").css('margin-left', navPadding + 'px');
-  $("#user-form").css('margin-right', navPadding + 'px');
+  $("#booksearch-form").css('margin-right', navPadding + 'px');
+}
+
+function hoverIcon(element) {
+  var unhoversrc = d3.select(element).attr('src');
+  d3.select(element).attr('src', unhoversrc.substring(0, unhoversrc.length - 4) + '_hover.svg');
+}
+function unhoverIcon(element) {
+  var unhoversrc = d3.select(element).attr('src');
+  d3.select(element).attr('src', unhoversrc.substring(0, unhoversrc.length - 10) + '.svg');
 }
