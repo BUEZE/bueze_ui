@@ -54,10 +54,15 @@ script src='/chartkick.js', type='text/javascript'
                 td id='author' class = 'text-center fontmid'
                   = book['bookname']
 
-                -if book['price'] >= book['ori_price']
+                -if book['price'].to_i >= book['ori_price'].to_i
                   td id='price_red' class = 'text-center fontmid'
                     = book['price']
-                  td id='price_green' class='wid1 text-center fontbig'
+                  td id='price' class='wid1 text-center fontbig'
+                    = ''
+                -elsif book['price'].to_i < book['ori_price'].to_i
+                  td id='price_green' class = 'text-center fontmid'
+                    = book['price']
+                  td id='price' class='wid1 text-center fontbig'
                     = ''
                 -else
                   td id='price_green' class = 'text-center fontbig'
